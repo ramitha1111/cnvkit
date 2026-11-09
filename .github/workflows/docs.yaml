@@ -1,3 +1,8 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 1 optimization:
+# - [MEDIUM] Add concurrency group to "docs.yaml"
+# Estimated savings: ~2 min/run
+#
 name: Docs
 
 # Counterpart to the Tests workflow, which ignores 'doc/**' and so leaves
@@ -42,6 +47,10 @@ on:
     - cron: '0 6 * * 1'
   workflow_dispatch:
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   docs:
     name: Build docs
